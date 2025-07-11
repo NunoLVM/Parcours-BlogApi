@@ -31,14 +31,16 @@ app.get('/', (req, res) => {
 
 // Routes à compléter ici
 
-app.get("/posts", (req,res) => {
-  try {
-    const posts = readJson("./data/posts.json");
-    res.json(posts);
-  } catch (error) {
-    res.status(500).send("internal error");
-  }  
-});
+// Nouvelle version de la route GET /posts avec filtre par auteur à la fin du fichier
+
+// app.get("/posts", (req,res) => {
+//   try {
+//     const posts = readJson("./data/posts.json");
+//     res.json(posts);
+//   } catch (error) {
+//     res.status(500).send("internal error");
+//   }  
+// });
 
 
 app.get("/posts/:id", (req, res) => {
@@ -191,6 +193,39 @@ app.delete("/posts/:id", (req, res) => {
      res.status(500).send("internal error");
    }
  });
+
+
+app.get("/posts", (req, res) => {
+  try {
+  const posts = readJson("./data/posts.json");
+  const authorFilter = req.query.author;
+
+  let result = posts;
+  
+  if (authorFilter) {
+    result = result.filter((p) => p.author === authorFilter);
+  }
+  res.json(result);
+
+  } catch (error) {
+    res.status(500).send("internal error");
+  }
+});
+
+
+app.get("/stats", (req, res) => {
+  try {
+    const posts = readJson("./data/posts.json");
+    const comments = readJson("./data/comments.json");
+
+    res.json({
+      totalPosts: posts.length,
+      totalComments: comments.length
+    });
+  } catch (error) {
+    res.status(500).send("internal error");
+  }
+});
 
 
 // Lancement du serveur
