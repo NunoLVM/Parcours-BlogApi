@@ -138,8 +138,7 @@ app.delete("/posts/:id", (req, res) => {
   try {
     const comments = readJson("./data/comments.json");
     const postId = parseInt(req.params.id);
-    const isCommentOfPost = ((c) => c.postId === postId);
-    const commentsOfPost = comments.filter(isCommentOfPost);
+    const commentsOfPost = comments.filter(c => c.postId === postId);
 
     res.json(commentsOfPost);
   } catch (error) {
