@@ -16,5 +16,11 @@
     "title": "Express simplifie vos APIs",
     "content": "Le framework Express permet de créer rapidement des routes et des middlewares pour vos applications web.",
     "author": "Charlie"
+  },
+  {
+    "id": 4,
+    "title": "Teste do POST",
+    "content": "Este artigo foi criado via API com muito estilo.",
+    "author": "Nuno"
   }
 ]
