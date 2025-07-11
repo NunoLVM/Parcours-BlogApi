@@ -131,6 +131,68 @@ app.delete("/posts/:id", (req, res) => {
   }  
  });
 
+
+ app.get("/posts/:id/comments", (req, res) => {
+  try {
+    const comments = readJson("./data/comments.json");
+    const postId = parseInt(req.params.id);
+    const isCommentOfPost = ((c) => c.postId === postId);
+    const commentsOfPost = comments.filter(isCommentOfPost);
+
+    res.json(commentsOfPost);
+  } catch (error) {
+    res.status(500).send("internal error");
+  }
+ });
+
+
+ app.post("/posts/:id/comments", (req, res) => {
+  try {
+    const comments = readJson("./data/comments.json");
+    const postId = parseInt(req.params.id);
+
+    let newId;
+    if(comments.length > 0) {
+      newId = comments[comments.length - 1].id + 1;
+    } else {
+      newId = 1;
+    }
+    const newComment = {
+      id: newId,
+      postId: postId,
+      author: req.body.author,
+      content: req.body.content,
+    };
+
+    comments.push(newComment);
+    writeJson("./data/comments.json", comments);
+    res.status(201).json(newComment);
+  } catch (error) {
+    res.status(500).send("internal error");
+  
+  }
+ });
+
+
+ app.delete("/comments/:id", (req, res) => {
+   try {
+     const comments = readJson("./data/comments.json");
+     const commentId = parseInt(req.params.id);
+     const index = comments.findIndex((c) => c.id === commentId);
+
+     if (index === -1) {
+       return res.status(404).send("not found");
+     }
+
+     comments.splice(index, 1);
+     writeJson("./data/comments.json", comments);
+     res.send("comment deleted");
+   } catch (error) {
+     res.status(500).send("internal error");
+   }
+ });
+
+
 // Lancement du serveur
 const PORT = 3000;
 app.listen(PORT, () => {

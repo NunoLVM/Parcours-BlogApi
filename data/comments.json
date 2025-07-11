@@ -22,5 +22,11 @@
     "postId": 3,
     "author": "Grace",
     "content": "Est-ce que tu feras un article sur les routeurs ?"
+  },
+  {
+    "id": 5,
+    "postId": 5,
+    "author": "Nuno",
+    "content": "Este post foi criado via API, e este comentário também!"
   }
 ]
