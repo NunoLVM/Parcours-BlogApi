@@ -19,8 +19,14 @@
   },
   {
     "id": 4,
-    "title": "Teste do POST",
-    "content": "Este artigo foi criado via API com muito estilo.",
+    "title": "Teste do POST/PATCH",
+    "content": "Este artigo foi criado e depois alterado via API com muito estilo.",
+    "author": "Nuno"
+  },
+  {
+    "id": 5,
+    "title": "Teste do POST/PATCH/DELETE/POST",
+    "content": "Este artigo foi criado, alterado, apagado e novamente criado via API com muito estilo.",
     "author": "Nuno"
   }
 ]

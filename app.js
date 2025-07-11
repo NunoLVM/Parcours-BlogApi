@@ -85,6 +85,51 @@ app.post("/posts", (req, res) => {
 });
 
 
+app.patch("/posts/:id", (req, res) => {
+  try {
+    const posts = readJson("./data/posts.json");
+    const postId = parseInt(req.params.id);
+    const post = posts.find((p) => p.id === postId);
+    
+    if (!post) {
+      return res.status(404).send("not found");
+    }
+
+    if (req.body.title) {
+      post.title = req.body.title;
+    }
+    if (req.body.content) {
+      post.content = req.body.content;
+    }
+    if (req.body.author) {
+      post.author = req.body.author;
+    }
+
+    writeJson("./data/posts.json", posts);
+    res.json(post);
+  } catch (error) {
+    res.status(500).send("internal error");
+  }  
+});
+
+
+app.delete("/posts/:id", (req, res) => {
+  try {
+    const posts = readJson("./data/posts.json");
+    const postId = parseInt(req.params.id);
+    const index = posts.findIndex((p) => p.id === postId);
+
+    if (index === -1) {
+      return res.status(404).send("not found");
+    }
+
+    posts.splice(index, 1); 
+    writeJson("./data/posts.json", posts);
+    res.send("post deleted");
+  } catch (error) {
+    res.status(500).send("internal error");
+  }  
+ });
 
 // Lancement du serveur
 const PORT = 3000;
