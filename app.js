@@ -65,17 +65,19 @@ app.post("/posts", (req, res) => {
     const posts = readJson("./data/posts.json");
 
     let newId;
-    if(posts.length > 0) {
+    if (posts.length > 0) {
       newId = posts[posts.length - 1].id + 1;
     } else {
       newId = 1;
     }
-  
+
+    
+    // const postAdd = { id: 5, ...data };
     const newPost = {
       id: newId,
       title: req.body.title,
       content: req.body.content,
-      author: req.body.author
+      author: req.body.author,
     };
 
     posts.push(newPost);
